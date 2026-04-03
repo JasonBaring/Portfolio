@@ -23,6 +23,20 @@ interface AboutHighlightItem {
     description: string;
 }
 
+type AboutTabId = 'about' | 'skills' | 'experience';
+
+interface AboutTabItem {
+    id: AboutTabId;
+    label: string;
+}
+
+interface ExperienceItem {
+    role: string;
+    company: string;
+    period: string;
+    description: string;
+}
+
 interface SkillItem {
     mark: string;
     label: string;
@@ -69,6 +83,7 @@ interface ContactItem {
 export class LimPortfolioPage {
     protected readonly currentYear = new Date().getFullYear();
     protected readonly isDark = signal(false);
+    protected readonly activeAboutTab = signal<AboutTabId>('about');
 
     protected readonly navItems: NavItem[] = [
         { label: 'Home', fragment: 'home' },
@@ -81,9 +96,15 @@ export class LimPortfolioPage {
 
     protected readonly stats: StatItem[] = [
         { value: '3+', label: 'Years Experience' },
-        { value: '10+', label: 'Projects Completed' },
-        { value: '2+', label: 'Happy Clients' },
-        { value: '3+', label: 'Certifications' }
+        { value: '6+', label: 'Projects Completed' },
+        { value: '1+', label: 'Happy Clients' },
+        { value: '2+', label: 'Certifications' }
+    ];
+
+    protected readonly aboutTabs: AboutTabItem[] = [
+        { id: 'about', label: 'About Me' },
+        { id: 'skills', label: 'Skills' },
+        { id: 'experience', label: 'Experience' }
     ];
 
     protected readonly aboutHighlights: AboutHighlightItem[] = [
@@ -114,42 +135,40 @@ export class LimPortfolioPage {
     protected readonly primaryStack: SkillItem[] = [
         { mark: 'NG', label: 'Angular', accent: '#dd0031' },
         { mark: 'TS', label: 'TypeScript', accent: '#2563eb' },
-        { mark: 'R', label: 'React', accent: '#06b6d4' },
-        { mark: 'V', label: 'Vue', accent: '#22c55e' },
-        { mark: 'N', label: 'Next.js', accent: '#111827' },
+        { mark: 'JS', label: 'JavaScript', accent: '#eab308' },
         { mark: 'TW', label: 'Tailwind', accent: '#14b8a6' },
-        { mark: 'B', label: 'Bootstrap', accent: '#7c3aed' },
-        { mark: 'S', label: 'Svelte', accent: '#f97316' },
-        { mark: 'H5', label: 'HTML5', accent: '#f97316' }
+        { mark: 'CSS', label: 'CSS', accent: '#2563eb' },
+        { mark: 'H5', label: 'HTML', accent: '#f97316' },
+        { mark: 'BT', label: 'Bootstrap', accent: '#7c3aed' }
     ];
 
     protected readonly secondaryStack: SkillItem[] = [
+        { mark: 'ND', label: 'Node.js', accent: '#16a34a' },
         { mark: 'EX', label: 'Express', accent: '#4b5563' },
-        { mark: 'PG', label: 'PostgreSQL', accent: '#2563eb' },
-        { mark: 'M', label: 'MongoDB', accent: '#22c55e' },
-        { mark: 'J', label: 'Java', accent: '#ef4444' },
-        { mark: 'SP', label: 'Spring', accent: '#84cc16' },
-        { mark: 'N', label: 'Node.js', accent: '#16a34a' }
+        { mark: 'MY', label: 'MySQL', accent: '#2563eb' },
+        { mark: 'GH', label: 'GitHub', accent: '#111827' },
+        { mark: 'GT', label: 'Git', accent: '#ef4444' },
+        { mark: 'FG', label: 'Figma', accent: '#a855f7' }
     ];
 
     protected readonly projects: ProjectItem[] = [
         {
-            title: 'NexGen',
+            title: 'Pulse',
             category: 'Web App',
-            description: 'The all-in-one platform to manage your team, track analytics, and build products users love.',
+            description: 'A product-focused landing page built to promote Pulse jump rope with bold visuals, strong calls to action, and a conversion-first layout.',
             tags: ['HTML', 'CSS', 'JavaScript'],
-            accent: '#7c3aed',
+            accent: '#dc2626',
             previewClass: 'project-preview--nexgen',
-            previewImage: 'profile/nexgen-preview.svg'
+            previewImage: 'profile/pulse.jpg'
         },
         {
-            title: 'Apex',
+            title: 'Bizzix',
             category: 'Web App',
-            description: 'A secure vault for your sensitive information, built with modern web technologies.',
+            description: 'A professional consulting agency website focused on business services, strong calls to action, and a polished corporate presentation.',
             tags: ['React', 'TypeScript', 'Tailwind CSS', 'API Integration'],
-            accent: '#f59e0b',
+            accent: '#f97316',
             previewClass: 'project-preview--apex',
-            previewImage: 'profile/apex-preview.svg'
+            previewImage: 'profile/bizzix.png'
         }
     ];
 
@@ -157,18 +176,18 @@ export class LimPortfolioPage {
         {
             title: 'Certified HTML Developer',
             issuer: 'W3Schools',
-            date: 'March 2025',
+            date: 'March 15, 2024',
             description: 'Passed the W3Schools HTML certification exam at the Professional level.',
             tags: ['HTML', 'Web Development', 'Frontend'],
-            image: 'profile/htmlCertificate.png'
+            image: 'profile/html-certificate-baring.png'
         },
         {
-            title: 'Certified Laravel Developer',
+            title: 'Certified CSS Developer',
             issuer: 'W3Schools',
-            date: 'February 2024',
+            date: 'March 15, 2024',
             description: 'Passed the W3Schools CSS certification exam at the Professional level.',
-            tags: ['API Integration', 'Database management', 'Clean architecture'],
-            image: 'profile/laravelCertificate.png'
+            tags: ['CSS', 'Web Design', 'Frontend'],
+            image: 'profile/css-certificate-baring.png'
         }
     ];
 
@@ -179,9 +198,24 @@ export class LimPortfolioPage {
     ];
 
     protected readonly contactItems: ContactItem[] = [
-        { icon: 'pi pi-envelope', title: 'Email', value: 'limbrian2003@gmail.com' },
-        { icon: 'pi pi-phone', title: 'Phone', value: '+(63) 963-940-8196' },
+        { icon: 'pi pi-envelope', title: 'Email', value: 'baringjasond2@gmail.com' },
+        { icon: 'pi pi-phone', title: 'Phone', value: '09513830604' },
         { icon: 'pi pi-map-marker', title: 'Location', value: 'Davao Del Norte, Tagum City, Philippines' }
+    ];
+
+    protected readonly experienceItems: ExperienceItem[] = [
+        {
+            role: 'Full Stack Developer',
+            company: 'Freelance & Personal Projects',
+            period: '2023 - Present',
+            description: 'Built responsive web applications, portfolio projects, and UI-driven experiences using modern frontend and backend tools.'
+        },
+        {
+            role: 'Frontend Developer',
+            company: 'Academic and Client Work',
+            period: '2022 - 2023',
+            description: 'Focused on layout implementation, reusable components, and clean user interfaces with attention to accessibility and responsiveness.'
+        }
     ];
 
     protected navigateToSection(fragment: string): void {
@@ -201,5 +235,9 @@ export class LimPortfolioPage {
 
     protected toggleTheme(): void {
         this.isDark.update((value) => !value);
+    }
+
+    protected setAboutTab(tab: AboutTabId): void {
+        this.activeAboutTab.set(tab);
     }
 }

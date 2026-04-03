@@ -2,7 +2,7 @@
     <header class="site-header">
         <div class="container header-inner">
             <button class="brand-button" type="button" (click)="navigateToSection('home')">
-                Brian<span>Lim</span>
+                Jason<span>Baring</span>
             </button>
 
             <nav class="site-nav" aria-label="Primary">
@@ -21,79 +21,140 @@
         <section id="home" class="hero-section">
             <div class="container hero-grid">
                 <div class="hero-copy">
-                    <p class="eyebrow">Portfolio</p>
-                    <h1>Brian Lim</h1>
-                    <h2>Full Stack Developer</h2>
+                    <p class="hero-chip">Hi There!</p>
+                    <h1>I am Jason Baring</h1>
+                    <h2>A Full Stack Developer</h2>
                     <p class="hero-description">
-                        Passionate about creating beautiful and functional web applications. Specialized in modern web technologies and clean
-                        code practices.
+                        I build responsive, user-friendly web applications with clean code, polished interfaces, and a strong focus on real-world
+                        functionality.
                     </p>
 
                     <div class="hero-actions">
                         <button class="button-primary" type="button" (click)="navigateToSection('projects')">
-                            View My Work
+                            Hire Me
                             <i class="pi pi-arrow-right"></i>
                         </button>
-                        <button class="button-secondary" type="button" (click)="navigateToSection('contact')">Contact Me</button>
+                        <button class="button-secondary" type="button" (click)="navigateToSection('projects')">View Portfolio</button>
+                    </div>
+
+                    <div class="hero-socials">
+                        <span>Facebook</span>
+                        <span>Twitter</span>
+                        <span>LinkedIn</span>
                     </div>
                 </div>
 
                 <div class="hero-visual">
-                    <div class="profile-ring">
-                        <div class="profile-photo" role="img" aria-label="Brian Lim portrait"></div>
-                        <span class="profile-badge">A+</span>
+                    <div class="hero-photo-wrap">
+                        <div class="hero-photo" role="img" aria-label="Jason Baring portrait"></div>
+                        <span class="profile-badge">Available</span>
                     </div>
                 </div>
             </div>
 
-            <button class="scroll-cue" type="button" (click)="navigateToSection('about')">
-                <span>Scroll Down</span>
-                <i class="pi pi-angle-down"></i>
-            </button>
-        </section>
-
-        <section class="stats-section">
-            <div class="container responsive-grid stats-grid">
-                @for (item of stats; track item.label) {
-                    <article class="stat-card span-12 sm-span-6 lg-span-3">
-                        <strong>{{ item.value }}</strong>
-                        <span>{{ item.label }}</span>
-                    </article>
-                }
+            <div class="container">
+                <div class="hero-stats">
+                    @for (item of stats; track item.label) {
+                        <article class="stat-card">
+                            <strong>{{ item.value }}</strong>
+                            <span>{{ item.label }}</span>
+                        </article>
+                    }
+                </div>
             </div>
         </section>
 
         <section id="about" class="about-section">
-            <div class="container about-content">
-                <div class="about-heading">
-                    <p class="section-kicker">About</p>
-                    <h3>About Me</h3>
-                    <div class="title-underline title-underline--center"></div>
+            <div class="container about-showcase">
+                <div class="about-photo-panel">
+                    <div class="about-photo-frame">
+                        <div class="about-photo" role="img" aria-label="Jason Baring portrait"></div>
+                    </div>
                 </div>
 
-                <article class="about-copy-card">
-                    <h4>Brian Lim</h4>
-                    <p class="about-role">Full Stack Developer</p>
-                    <p class="about-description about-description--center">
-                        Passionate developer with expertise in building modern web applications. I love solving complex problems and creating
-                        intuitive user experiences.
-                    </p>
-
-                    <div class="responsive-grid about-highlights">
-                        @for (item of aboutHighlights; track item.title) {
-                            <div class="highlight-card span-12 sm-span-6">
-                                <div class="highlight-icon">
-                                    <i [class]="item.icon"></i>
-                                </div>
-                                <div>
-                                    <strong>{{ item.title }}</strong>
-                                    <span>{{ item.description }}</span>
-                                </div>
-                            </div>
+                <div class="about-story-panel">
+                    <div class="about-tab-row">
+                        @for (tab of aboutTabs; track tab.id) {
+                            <button
+                                class="about-tab"
+                                type="button"
+                                [class.is-active]="activeAboutTab() === tab.id"
+                                [attr.aria-pressed]="activeAboutTab() === tab.id"
+                                (click)="setAboutTab(tab.id)"
+                            >
+                                {{ tab.label }}
+                            </button>
                         }
                     </div>
-                </article>
 
+                    @if (activeAboutTab() === 'about') {
+                        <p class="section-kicker">About</p>
+                        <h3>My Story</h3>
+                        <div class="title-underline"></div>
+                        <p class="about-description">
+                            Passionate developer with expertise in building modern web applications. I enjoy turning ideas into polished digital
+                            experiences that feel intuitive, fast, and reliable.
+                        </p>
+                        <p class="about-story-lead">I do web design and development with a focus on practical solutions, clean UI, and maintainable code.</p>
+
+                        <div class="responsive-grid about-highlights">
+                            @for (item of aboutHighlights; track item.title) {
+                                <div class="highlight-card span-12 sm-span-6">
+                                    <div class="highlight-icon">
+                                        <i [class]="item.icon"></i>
+                                    </div>
+                                    <div>
+                                        <strong>{{ item.title }}</strong>
+                                        <span>{{ item.description }}</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @if (activeAboutTab() === 'skills') {
+                        <p class="section-kicker">Skills</p>
+                        <h3>Core Strengths</h3>
+                        <div class="title-underline"></div>
+                        <p class="about-description">A quick snapshot of the tools and disciplines I use most when building modern web experiences.</p>
+
+                        <div class="about-skill-list">
+                            @for (item of primaryStack; track item.label) {
+                                <span class="about-skill-chip">{{ item.label }}</span>
+                            }
+                            @for (item of secondaryStack; track item.label) {
+                                <span class="about-skill-chip about-skill-chip--soft">{{ item.label }}</span>
+                            }
+                        </div>
+
+                        <p class="about-story-lead">I work across frontend, backend, and UI implementation, with a strong focus on responsive design and maintainable code.</p>
+                    }
+
+                    @if (activeAboutTab() === 'experience') {
+                        <p class="section-kicker">Experience</p>
+                        <h3>What I&apos;ve Worked On</h3>
+                        <div class="title-underline"></div>
+                        <p class="about-description">Recent roles and hands-on work that shaped my development experience.</p>
+
+                        <div class="experience-list">
+                            @for (item of experienceItems; track item.role + item.period) {
+                                <article class="experience-card">
+                                    <div class="experience-head">
+                                        <div>
+                                            <h4>{{ item.role }}</h4>
+                                            <p>{{ item.company }}</p>
+                                        </div>
+                                        <span class="experience-period">{{ item.period }}</span>
+                                    </div>
+                                    <p class="experience-description">{{ item.description }}</p>
+                                </article>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="container about-content">
                 <div class="what-i-do-panel">
                     <h4>What I Do</h4>
 
@@ -329,14 +390,18 @@
     </main>
 
     <footer class="site-footer">
-        <div class="container responsive-grid footer-grid">
+            <div class="container responsive-grid footer-grid">
             <div class="span-12 md-span-4">
                 <h4>About</h4>
                 <p>A modern developer portfolio showcasing projects, skills, and achievements.</p>
             </div>
             <div class="span-12 md-span-4">
                 <h4>Quick Links</h4>
-                <button class="footer-link" type="button" (click)="navigateToSection('home')">Home</button>
+                <div class="footer-links">
+                    @for (item of navItems; track item.fragment) {
+                        <button class="footer-link" type="button" (click)="navigateToSection(item.fragment)">{{ item.label }}</button>
+                    }
+                </div>
             </div>
             <div class="span-12 md-span-4">
                 <h4>Connect</h4>
@@ -348,6 +413,6 @@
                 </div>
             </div>
         </div>
-        <div class="container footer-bottom">&copy; {{ currentYear }} Brian Lim</div>
+        <div class="container footer-bottom">&copy; {{ currentYear }} Jason Baring</div>
     </footer>
 </div>
